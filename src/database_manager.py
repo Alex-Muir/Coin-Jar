@@ -41,6 +41,26 @@ def set_category_defaults(con):
 
     con.commit()     
 
+def insert_income(con):
+    """Insert income into income table""" 
+    cur = con.cursor()
+    cur.execute("""
+        INSERT INTO income (amount, category_id, description) VALUES
+            (1032.64, 10, 'Camellia Coffee Roasters')
+    """)
+    
+    con.commit()
+
+# TEST
+def select_income(con):
+    cur = con.cursor()
+    res = cur.execute("""
+        SELECT name, type, date, amount, description 
+        FROM categories JOIN income ON income.category_id = categories.id
+    """)
+    print(res.fetchall()) 
+    
+ 
 # TEST
 def test_table_exists(con):
     cur = con.cursor()

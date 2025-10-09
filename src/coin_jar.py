@@ -9,4 +9,7 @@ dm.set_category_defaults(con)
 # TEST
 dm.test_table_exists(con)
 dm.test_select(con)
+dm.insert_income(con)
+dm.select_income(con)
+con.close()
 
