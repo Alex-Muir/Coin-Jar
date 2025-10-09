@@ -3,3 +3,6 @@ venv/
 
 # SQLite database
 coinjar.db
+
+# Python
+src/__pycache__
