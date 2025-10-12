@@ -41,13 +41,18 @@ def set_category_defaults(con):
 
     con.commit()     
 
-def insert_income(con):
+def insert_income(con, data):
     """Insert income into income table""" 
     cur = con.cursor()
-    cur.execute("""
-        INSERT INTO income (amount, category_id, description) VALUES
-            (1032.64, 10, 'Camellia Coffee Roasters')
-    """)
+    if data[0] is None:
+        new_data = (data[1], data[2], data[3])
+        cur.execute("""
+            INSERT INTO income (amount, category_id, description) VALUES
+                (?, ?, ?)""", new_data)
+    else:
+        cur.execute("""
+            INSERT INTO income (date, amount, category_id, description) VALUES
+                (?, ?, ?, ?)""", data)
     
     con.commit()
 
