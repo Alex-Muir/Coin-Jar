@@ -41,41 +41,32 @@ def set_category_defaults(con):
 
     con.commit()     
 
-def insert_income(con, data):
+def insert_data(con, data, group):
     """Insert income into income table""" 
     cur = con.cursor()
     if data[0] is None:
         new_data = (data[1], data[2], data[3])
-        cur.execute("""
-            INSERT INTO income (amount, category_id, description) VALUES
+        cur.execute(f"""
+            INSERT INTO {group} (amount, category_id, description) VALUES
                 (?, ?, ?)""", new_data)
     else:
-        cur.execute("""
-            INSERT INTO income (date, amount, category_id, description) VALUES
+        cur.execute(f"""
+            INSERT INTO {group} (date, amount, category_id, description) VALUES
                 (?, ?, ?, ?)""", data)
     
     con.commit()
 
-# TEST
-def select_income(con):
+def select(con, group):
     cur = con.cursor()
-    res = cur.execute("""
-        SELECT name, type, date, amount, description 
-        FROM categories JOIN income ON income.category_id = categories.id
+    res = cur.execute(f"""
+        SELECT name, date, amount, description 
+        FROM categories JOIN income ON {group}.category_id = categories.id
     """)
-    print(res.fetchall()) 
+    data = res.fetchall()
+    print(data) 
     
- 
-# TEST
-def test_table_exists(con):
-    cur = con.cursor()
-    res = cur.execute("SELECT name FROM sqlite_master")
-    tables = res.fetchall()
-    print(tables)
-
-# TEST
-def test_select(con):
-    cur = con.cursor()
-    res = cur.execute("SELECT * FROM categories")
-    tables = res.fetchall()
-    print(tables)
+#def select(con, group):
+#    cur = con.cursor()
+#    res = cur.execute(f"SELECT * FROM {group}")
+#    data = res.fetchall()
+#    print(data)
