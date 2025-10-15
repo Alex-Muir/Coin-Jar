@@ -11,6 +11,8 @@ def print_menu():
     2) Enter expenses
     3) View Income
     4) View Expenses
+    5) Delete Income
+    6) Delete Expenses
     0) Exit
     """)
 
@@ -28,7 +30,7 @@ def main():
     # User selection
     while True:
         print_menu()
-        selection = input("\nPlease make a selection:")
+        selection = input("\nPlease make a selection: ")
         if selection == '1':
             # Enter Income data
             data = g.get_input_data(group="income")
@@ -43,9 +45,19 @@ def main():
         elif selection  == '4':
             # View Expenses data
             dm.select(con, group="expenses")
+        elif selection == '5':
+            # Delete income
+            id_set = dm.display_for_delete(con, group="income")
+            delete_id = g.get_delete_selection(id_set)
+            dm.delete(con, delete_id, group="income") 
+        elif selection == '6':
+            # Delete expenses
+            id_set = dm.display_for_delete(con, group="expenses")
+            delete_id = g.get_delete_selection(id_set)
+            dm.delete(con, delete_id, group="expenses") 
         elif selection == '0':
             con.close()
-            sys.exit()
+            sys.exit("\nGoodbye, and happy saving!")
         else:
             print("\nPlease enter a valid selection")
 

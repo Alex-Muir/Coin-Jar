@@ -1,9 +1,15 @@
+"""getters.py
+This module contains functions defined specifically for the purpose of getting
+data from the user. Functions defined here should be longer than one line, and 
+can also perform input validation if required.
+"""
+
 def _get_date():
     """Get the date for income or expenses"""
 
     print("\nPlease enter dates as 'yyyy-mm-dd' format (include the hyphens)."
           "\nYou can leace this blank if you would like to use today's date")
-    date = input("\nEnter the date of this income: ")
+    date = input("\nEnter the date: ")
     if not date:
         return None
     return date
@@ -67,4 +73,21 @@ def get_input_data(group):
     category_id = _get_category_id(group)
     description = _get_description()
 
-    return (date, amount, category_id, description) 
+    return (date, amount, category_id, description)
+
+def get_delete_selection(id_set):
+    """
+    Get the user's selection for which row to delete. Check validity by 
+    comparing against the set passed to the function. Ensure input is valid.
+    """
+    while True:
+        try:
+            selection = int(input("\nEnter the id of the row you'd like to delete: "))
+        except ValueError:
+            print("\nPlease ensure your selection is an integer")
+        else:
+            if selection not in id_set:
+                print("\nPlease ensure your selection is listed in the output "
+                      "of possible rows to be deleted")
+                continue
+            return selection                

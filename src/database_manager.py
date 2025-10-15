@@ -1,3 +1,9 @@
+"""database_manager.py
+Any operation that accesses the database is defined here. If data validation is
+required it should be done outside of this module. Some functions in this file
+may return data to be used for validation in functions defined in other modules.
+"""
+
 import sqlite3
 
 def get_connection():
@@ -57,16 +63,37 @@ def insert_data(con, data, group):
     con.commit()
 
 def select(con, group):
+    """
+    Select data from income or expenses and join it with the categories table
+    """
     cur = con.cursor()
     res = cur.execute(f"""
-        SELECT name, date, amount, description 
-        FROM categories JOIN income ON {group}.category_id = categories.id
+        SELECT name, date, amount, type, description 
+        FROM categories JOIN {group} ON {group}.category_id = categories.id
     """)
     data = res.fetchall()
     print(data) 
+
+def display_for_delete(con, group):
+    """
+    Display the data, including the ids, of the rows of the table in question.
+    Returns a set to check against user input, ensuring the input is valid.
+    """
+    cur = con.cursor()
+    res = cur.execute(f"""
+        SELECT {group}.id, name, date, amount, type, description
+        FROM categories JOIN {group} ON {group}.category_id = categories.id
+    """)
+    id_set = set()
+    for row in res.fetchall():
+        id = row[0]
+        id_set.add(id)
+        print(row)
+    return id_set
+
+def delete(con, delete_id, group):
+    """Delete an entry from the income or expenses table based on id"""
+    cur = con.cursor()
+    cur.execute(f"DELETE FROM {group} WHERE id=?", str(delete_id))
+    con.commit()
     
-#def select(con, group):
-#    cur = con.cursor()
-#    res = cur.execute(f"SELECT * FROM {group}")
-#    data = res.fetchall()
-#    print(data)
