@@ -45,7 +45,7 @@ def _get_category_id(group):
 
     if group == "expenses":
         print("\nExpense categories and ids")
-        print("\nRent: 1\nGroceries: 2\n Eating Out: 3\nTransportation: 4")
+        print("\nRent: 1\nGroceries: 2\nEating Out: 3\nTransportation: 4")
         print("Entertainment & Leisure: 5\nUtilities: 6\nHealth & Wellness: 7")
         print("Misc Expense: 8")
 

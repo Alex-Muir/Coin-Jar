@@ -21,7 +21,7 @@ def create_table(con):
         cur = con.cursor()
         con.execute("PRAGMA foreign_keys = ON;")
         cur.executescript(coinjar_schema)
-        con.commit
+        con.commit()
 
 def set_category_defaults(con):
     """Sets the default categories for tracking expenses and income"""
@@ -45,10 +45,15 @@ def set_category_defaults(con):
         defaults
     )
 
-    con.commit()     
+    con.commit()
+
+def _validate_group(group):
+    if group not in ("income", "expenses"):
+        raise ValueError(f"\nInvalid table name: {group}")     
 
 def insert_data(con, data, group):
     """Insert income into income table""" 
+    _validate_group(group)
     cur = con.cursor()
     if data[0] is None:
         new_data = (data[1], data[2], data[3])
@@ -66,6 +71,7 @@ def select(con, group):
     """
     Select data from income or expenses and join it with the categories table
     """
+    _validate_group(group)
     cur = con.cursor()
     res = cur.execute(f"""
         SELECT name, date, amount, type, description 
@@ -79,6 +85,7 @@ def display_for_delete(con, group):
     Display the data, including the ids, of the rows of the table in question.
     Returns a set to check against user input, ensuring the input is valid.
     """
+    _validate_group(group)
     cur = con.cursor()
     res = cur.execute(f"""
         SELECT {group}.id, name, date, amount, type, description
@@ -86,14 +93,15 @@ def display_for_delete(con, group):
     """)
     id_set = set()
     for row in res.fetchall():
-        id = row[0]
-        id_set.add(id)
+        id_set.add(row[0])
         print(row)
     return id_set
 
 def delete(con, delete_id, group):
     """Delete an entry from the income or expenses table based on id"""
+    _validate_group(group)
     cur = con.cursor()
-    cur.execute(f"DELETE FROM {group} WHERE id=?", str(delete_id))
+    id_tuple = (delete_id,)
+    cur.execute(f"DELETE FROM {group} WHERE id=?", id_tuple)
     con.commit()
     
