@@ -5,7 +5,6 @@ can also perform input validation if required.
 """
 
 from printer import Printer
-from database_manager import DatabaseManager
 
 class Getter:
     """A class for getting"""
@@ -13,7 +12,6 @@ class Getter:
     def __init__(self):
         """Nothing happens here"""
         self.p = Printer()
-        self.dm = DatabaseManager()
 
     def _get_date(self):
         """Get the date for income or expenses"""
@@ -38,7 +36,7 @@ class Getter:
                     continue
                 return amount
 
-    def _get_category_id(self, group):
+    def _get_category_id(self, valid_ids, group):
         """Get the category id for the type of income or expense"""
         if group == "income":
             self.p.print_income_categories()
@@ -51,12 +49,11 @@ class Getter:
                 category_id = int(input("Enter the category id: ").strip())
             except ValueError:
                 print("\nPlease enter an integer listed above")
-                continue
             else:
-                if category_id not in self.dm.get_category_ids(group):
+                if category_id not in valid_ids:
                     print("\nPlease enter a valid number")
                     continue
-            return category_id
+                return category_id
     
     def _get_description(self):
         """Get an optional description for the income or expense"""
@@ -65,10 +62,10 @@ class Getter:
             return description
         return None
 
-    def get_input_data(self, group):
+    def get_input_data(self, valid_ids, group):
         date = self._get_date()
         amount = self._get_amount()
-        category_id = self._get_category_id(group)
+        category_id = self._get_category_id(valid_ids, group)
         description = self._get_description()
 
         return (date, amount, category_id, description)
@@ -78,14 +75,17 @@ class Getter:
         Get the user's selection for which row to delete. Check validity by 
         comparing against the set passed to the function. Ensure input is valid.
         """
-        while True:
-            try:
-                selection = int(input("\nEnter the id of the row you'd like to delete: ").strip())
-            except ValueError:
-                print("\nPlease ensure your selection is an integer")
-            else:
-                if selection not in id_set:
-                    print("\nPlease ensure your selection is listed in the output "
-                          "of possible rows to be deleted")
-                    continue
-                return selection                
+        if id_set:
+            while True:
+                try:
+                    selection = int(input("\nEnter the id of the row you'd like to delete: ").strip())
+                except ValueError:
+                    print("\nPlease ensure your selection is an integer")
+                else:
+                    if selection not in id_set:
+                        print("\nPlease ensure your selection is listed in the output " 
+                              "of possible rows to be deleted")
+                        continue
+                    return selection    
+        else:
+            print("\nNothing to delete")            
