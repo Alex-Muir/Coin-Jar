@@ -30,12 +30,14 @@ class CoinJar:
             self.p.print_menu()
             selection = input("\nPlease make a selection: ").strip()
             if selection == '1':                                                    
-                # Enter Income data                                                 
-                data = self.g.get_input_data(group="income")                             
+                # Enter Income data     
+                valid_ids = self.dm.get_valid_category_ids(group="income")                                            
+                data = self.g.get_input_data(valid_ids, group="income")                             
                 self.dm.insert_data(data, group="income")                           
             elif selection == '2':                                                  
-                # Enter Expenses data                                               
-                data = self.g.get_input_data(group="expenses")                           
+                # Enter Expenses data  
+                valid_ids = self.dm.get_valid_category_ids(group="expense")                                             
+                data = self.g.get_input_data(valid_ids, group="expenses")                           
                 self.dm.insert_data(data, group="expenses")                         
             elif selection == '3':                                                  
                 # View Income data                                                  
@@ -52,7 +54,7 @@ class CoinJar:
                 self.dm.delete(delete_id, group="income")                           
             elif selection == '6':                                                  
                 # Delete expenses                                                   
-                id_set = self.dm.display_for_delete(group="expenses")               
+                id_set = self.dm.display_for_delete(group="expenses")           
                 delete_id = self.g.get_delete_selection(id_set)                          
                 self.dm.delete(delete_id, group="expenses")                         
             elif selection == '0':                                                  
