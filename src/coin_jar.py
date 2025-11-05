@@ -1,66 +1,67 @@
 import sqlite3
 import sys
 
-import database_manager as dm
-import getters as g
+from database_manager import DatabaseManager
+from getters import Getter
+from printer import Printer
 
-def print_menu():
-    """Print the menu to display potential selections"""
-    print("""
-    1) Enter Income
-    2) Enter expenses
-    3) View Income
-    4) View Expenses
-    5) Delete Income
-    6) Delete Expenses
-    0) Exit
-    """)
+class CoinJar:
+    """CoinJar class, responsible for """
 
-def main():
+    def __init__(self):
+        """Initializes a database manager and a getter for a CoinJar"""
+        self.dm = DatabaseManager()
+        self.g = Getter()
+        self.p = Printer()
 
-    # Greeting
-    print("\nWelcome to Coin Jar. A budgeting and financial tracking application"
-          " written in Python.")
+    def run(self):
+        """Runs the program"""
+        self.p.print_greeting()
+        self.dm.create_table()
+        self.dm.set_category_defaults()
+        self._user_selection()
 
-    # Set up
-    con = dm.get_connection()
-    dm.create_table(con)
-    dm.set_category_defaults(con)
-
-    # User selection
-    while True:
-        print_menu()
-        selection = input("\nPlease make a selection: ")
-        if selection == '1':
-            # Enter Income data
-            data = g.get_input_data(group="income")
-            dm.insert_data(con, data, group="income") 
-        elif selection == '2':
-            # Enter Expenses data
-            data = g.get_input_data(group="expenses")
-            dm.insert_data(con, data, group="expenses")
-        elif selection == '3':
-            # View Income data
-            dm.select(con, group="income")
-        elif selection  == '4':
-            # View Expenses data
-            dm.select(con, group="expenses")
-        elif selection == '5':
-            # Delete income
-            id_set = dm.display_for_delete(con, group="income")
-            delete_id = g.get_delete_selection(id_set)
-            dm.delete(con, delete_id, group="income") 
-        elif selection == '6':
-            # Delete expenses
-            id_set = dm.display_for_delete(con, group="expenses")
-            delete_id = g.get_delete_selection(id_set)
-            dm.delete(con, delete_id, group="expenses") 
-        elif selection == '0':
-            con.close()
-            sys.exit("\nGoodbye, and happy saving!")
-        else:
-            print("\nPlease enter a valid selection")
+    def _user_selection(self): 
+        """
+        Prints the menu, gets user selection, and calls functions based on the
+        user's choice
+        """
+        while True:
+            self.p.print_menu()
+            selection = input("\nPlease make a selection: ")
+            if selection == '1':                                                    
+                # Enter Income data                                                 
+                data = self.g.get_input_data(group="income")                             
+                self.dm.insert_data(data, group="income")                           
+            elif selection == '2':                                                  
+                # Enter Expenses data                                               
+                data = self.g.get_input_data(group="expenses")                           
+                self.dm.insert_data(data, group="expenses")                         
+            elif selection == '3':                                                  
+                # View Income data                                                  
+                data = self.dm.select(group="income")   
+                self.p.print_select(data)                                   
+            elif selection  == '4':                                                 
+                # View Expenses data                                                
+                data = self.dm.select(group="expenses")
+                self.p.print_select(data)                                    
+            elif selection == '5':                                                  
+                # Delete income                                                     
+                id_set = self.dm.display_for_delete(group="income")                 
+                delete_id = self.g.get_delete_selection(id_set)                          
+                self.dm.delete(delete_id, group="income")                           
+            elif selection == '6':                                                  
+                # Delete expenses                                                   
+                id_set = self.dm.display_for_delete(group="expenses")               
+                delete_id = self.g.get_delete_selection(id_set)                          
+                self.dm.delete(delete_id, group="expenses")                         
+            elif selection == '0':                                                  
+                self.dm.close()                                                         
+                sys.exit("\nGoodbye, and happy saving!")                            
+            else:                                                                   
+                print("\nPlease enter a valid selection")
+         
 
 if __name__ == "__main__":
-    main()
-
+    cj = CoinJar()
+    cj.run()

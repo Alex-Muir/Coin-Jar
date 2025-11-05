@@ -4,90 +4,94 @@ data from the user. Functions defined here should be longer than one line, and
 can also perform input validation if required.
 """
 
-def _get_date():
-    """Get the date for income or expenses"""
+from printer import Printer
 
-    print("\nPlease enter dates as 'yyyy-mm-dd' format (include the hyphens)."
-          "\nYou can leace this blank if you would like to use today's date")
-    date = input("\nEnter the date: ")
-    if not date:
-        return None
-    return date
+class Getter:
+    """A class for getting"""
 
-def _get_amount():
-    """Get amount for income or expenses"""
+    def __init__(self):
+        """Nothing happens here"""
+        self.p = Printer()
 
-    while True:
-        try:
-            amount = float(input("\nEnter the amount: "))
-        except ValueError:
-            print("\nPlease enter a number")
-        else:
-            if amount < 0:
-                print("\nThe amount must be greater than 0")
-                continue
-            return amount
+    def _get_date(self):
+        """Get the date for income or expenses"""
 
-def _get_category_id(group):
-    """Get the category id for the type of income or expense"""
-    # THIS WILL BE REPLACED WITH A GRAPHICAL MENU. THE USER WILL NOT NEED TO
-    # KNOW THE ACTUAL ID OF THE CATEGORY
+        self.p.print_date_format_requirement()
+        date = input("\nEnter the date: ")
+        if not date:
+            return None
+        return date
 
-    # MAKE THE CHECKS DYNAMIC EX: SELECT COUNT(*) from CATEGORIES WHERE type = 'expense
-    # TO CHECK IF ID IS VALID
+    def _get_amount(self):
+        """Get amount for income or expenses"""
 
-    # CAN CURRENTLY ENTER AN EXPENSE ID FOR INCOME (AND VICE VERSA) AND IT WILL 
-    # COUNT AS VALID INPUT
+        while True:
+            try:
+                amount = float(input("\nEnter the amount: "))
+            except ValueError:
+                print("\nPlease enter a number")
+            else:
+                if amount < 0:
+                    print("\nThe amount must be greater than 0")
+                    continue
+                return amount
 
-    if group == "income":
-        print("\nIncome categories and ids")
-        print("\nSalary: 9\nPay Check: 10\nMisc Income: 11")
+    def _get_category_id(self, group):
+        """Get the category id for the type of income or expense"""
+        # THIS WILL BE REPLACED WITH A GRAPHICAL MENU. THE USER WILL NOT NEED TO
+        # KNOW THE ACTUAL ID OF THE CATEGORY
 
-    if group == "expenses":
-        print("\nExpense categories and ids")
-        print("\nRent: 1\nGroceries: 2\nEating Out: 3\nTransportation: 4")
-        print("Entertainment & Leisure: 5\nUtilities: 6\nHealth & Wellness: 7")
-        print("Misc Expense: 8")
+        # MAKE THE CHECKS DYNAMIC EX: SELECT COUNT(*) from CATEGORIES WHERE type = 'expense
+        # TO CHECK IF ID IS VALID
 
-    while True:
-        try:
-            category_id = int(input("Enter the category id: "))
-        except ValueError:
-            print("\nPlease enter an integer listed above")
-        else:
-            if category_id < 1 or category_id > 11:
-                print("\nPlease enter a valid number")
-                continue
-        return category_id
+        # CAN CURRENTLY ENTER AN EXPENSE ID FOR INCOME (AND VICE VERSA) AND IT WILL 
+        # COUNT AS VALID INPUT
+
+        if group == "income":
+            self.p.print_income_categories()
+
+        if group == "expenses":
+            self.p.print_expenses_categories()
+
+        while True:
+            try:
+                category_id = int(input("Enter the category id: "))
+            except ValueError:
+                print("\nPlease enter an integer listed above")
+            else:
+                if category_id < 1 or category_id > 11:
+                    print("\nPlease enter a valid number")
+                    continue
+            return category_id
     
-def _get_description():
-    """Get an optional description for the income or expense"""
-    description = input("\nEnter a description (you can leave this blank): ")
-    if description:
-        return description
-    return None
+    def _get_description(self):
+        """Get an optional description for the income or expense"""
+        description = input("\nEnter a description (you can leave this blank): ")
+        if description:
+            return description
+        return None
 
-def get_input_data(group):
-    date = _get_date()
-    amount = _get_amount()
-    category_id = _get_category_id(group)
-    description = _get_description()
+    def get_input_data(self, group):
+        date = self._get_date()
+        amount = self._get_amount()
+        category_id = self._get_category_id(group)
+        description = self._get_description()
 
-    return (date, amount, category_id, description)
+        return (date, amount, category_id, description)
 
-def get_delete_selection(id_set):
-    """
-    Get the user's selection for which row to delete. Check validity by 
-    comparing against the set passed to the function. Ensure input is valid.
-    """
-    while True:
-        try:
-            selection = int(input("\nEnter the id of the row you'd like to delete: "))
-        except ValueError:
-            print("\nPlease ensure your selection is an integer")
-        else:
-            if selection not in id_set:
-                print("\nPlease ensure your selection is listed in the output "
-                      "of possible rows to be deleted")
-                continue
-            return selection                
+    def get_delete_selection(self, id_set):
+        """
+        Get the user's selection for which row to delete. Check validity by 
+        comparing against the set passed to the function. Ensure input is valid.
+        """
+        while True:
+            try:
+                selection = int(input("\nEnter the id of the row you'd like to delete: "))
+            except ValueError:
+                print("\nPlease ensure your selection is an integer")
+            else:
+                if selection not in id_set:
+                    print("\nPlease ensure your selection is listed in the output "
+                          "of possible rows to be deleted")
+                    continue
+                return selection                
