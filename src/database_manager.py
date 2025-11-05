@@ -60,7 +60,7 @@ class DatabaseManager:
         if group not in self.valid_groups:
             raise ValueError(f"\nInvalid table name: {group}")
 
-    def get_category_ids(self, group):
+    def get_valid_category_ids(self, group):
         """Returns the category ids for the relevant group"""
         self._validate_group(group)
         cur = self.con.cursor()
