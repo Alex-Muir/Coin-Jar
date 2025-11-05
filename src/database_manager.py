@@ -60,6 +60,16 @@ class DatabaseManager:
         if group not in self.valid_groups:
             raise ValueError(f"\nInvalid table name: {group}")
 
+    def get_category_ids(self, group):
+        """Returns the category ids for the relevant group"""
+        self._validate_group(group)
+        cur = self.con.cursor()
+        res = cur.execute(f"""
+            SELECT id FROM categories WHERE type = ?""", 
+                (group,))
+        data = [r[0] for r in res.fetchall()]
+        return data
+
     def insert_data(self, data, group):
         """Insert income into income table""" 
         self._validate_group(group)

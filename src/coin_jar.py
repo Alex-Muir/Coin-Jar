@@ -6,7 +6,7 @@ from getters import Getter
 from printer import Printer
 
 class CoinJar:
-    """CoinJar class, responsible for """
+    """CoinJar class, responsible for running the program"""
 
     def __init__(self):
         """Initializes a database manager and a getter for a CoinJar"""
@@ -28,7 +28,7 @@ class CoinJar:
         """
         while True:
             self.p.print_menu()
-            selection = input("\nPlease make a selection: ")
+            selection = input("\nPlease make a selection: ").strip()
             if selection == '1':                                                    
                 # Enter Income data                                                 
                 data = self.g.get_input_data(group="income")                             

@@ -5,6 +5,7 @@ can also perform input validation if required.
 """
 
 from printer import Printer
+from database_manager import DatabaseManager
 
 class Getter:
     """A class for getting"""
@@ -12,12 +13,13 @@ class Getter:
     def __init__(self):
         """Nothing happens here"""
         self.p = Printer()
+        self.dm = DatabaseManager()
 
     def _get_date(self):
         """Get the date for income or expenses"""
 
         self.p.print_date_format_requirement()
-        date = input("\nEnter the date: ")
+        date = input("\nEnter the date: ").strip()
         if not date:
             return None
         return date
@@ -27,7 +29,7 @@ class Getter:
 
         while True:
             try:
-                amount = float(input("\nEnter the amount: "))
+                amount = float(input("\nEnter the amount: ").strip())
             except ValueError:
                 print("\nPlease enter a number")
             else:
@@ -38,15 +40,6 @@ class Getter:
 
     def _get_category_id(self, group):
         """Get the category id for the type of income or expense"""
-        # THIS WILL BE REPLACED WITH A GRAPHICAL MENU. THE USER WILL NOT NEED TO
-        # KNOW THE ACTUAL ID OF THE CATEGORY
-
-        # MAKE THE CHECKS DYNAMIC EX: SELECT COUNT(*) from CATEGORIES WHERE type = 'expense
-        # TO CHECK IF ID IS VALID
-
-        # CAN CURRENTLY ENTER AN EXPENSE ID FOR INCOME (AND VICE VERSA) AND IT WILL 
-        # COUNT AS VALID INPUT
-
         if group == "income":
             self.p.print_income_categories()
 
@@ -55,18 +48,19 @@ class Getter:
 
         while True:
             try:
-                category_id = int(input("Enter the category id: "))
+                category_id = int(input("Enter the category id: ").strip())
             except ValueError:
                 print("\nPlease enter an integer listed above")
+                continue
             else:
-                if category_id < 1 or category_id > 11:
+                if category_id not in self.dm.get_category_ids(group):
                     print("\nPlease enter a valid number")
                     continue
             return category_id
     
     def _get_description(self):
         """Get an optional description for the income or expense"""
-        description = input("\nEnter a description (you can leave this blank): ")
+        description = input("\nEnter a description (you can leave this blank): ").strip()
         if description:
             return description
         return None
@@ -86,7 +80,7 @@ class Getter:
         """
         while True:
             try:
-                selection = int(input("\nEnter the id of the row you'd like to delete: "))
+                selection = int(input("\nEnter the id of the row you'd like to delete: ").strip())
             except ValueError:
                 print("\nPlease ensure your selection is an integer")
             else:
