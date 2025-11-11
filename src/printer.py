@@ -24,7 +24,7 @@ class Printer:
     def print_date_format_requirement(self):
         """Print date format requirements"""
         print("\nPlease enter dates as 'yyyy-mm-dd' format (include the hyphens)."
-              "\nYou can leace this blank if you would like to use today's date")
+              "\nYou can leave this blank if you would like to use today's date")
 
     def print_income_categories(self):
         """Print the categories for income"""
