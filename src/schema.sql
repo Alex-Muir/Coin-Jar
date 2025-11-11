@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS categories (
 	type TEXT NOT NULL CHECK(type IN('income', 'expense'))	
 );
 
-CREATE TABLE IF NOT EXISTS expenses (
+CREATE TABLE IF NOT EXISTS expense (
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	date TEXT NOT NULL DEFAULT (DATE('now')), 
 	amount REAL NOT NULL, 
