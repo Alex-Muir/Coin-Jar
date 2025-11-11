@@ -4,6 +4,7 @@ import sys
 from database_manager import DatabaseManager
 from getters import Getter
 from printer import Printer
+from visualizer import Visualizer
 
 class CoinJar:
     """CoinJar class, responsible for running the program"""
@@ -13,6 +14,7 @@ class CoinJar:
         self.dm = DatabaseManager()
         self.g = Getter()
         self.p = Printer()
+        self.v = Visualizer()
 
     def run(self):
         """Runs the program"""
@@ -37,16 +39,17 @@ class CoinJar:
             elif selection == '2':                                                  
                 # Enter Expenses data  
                 valid_ids = self.dm.get_valid_category_ids(group="expense")                                             
-                data = self.g.get_input_data(valid_ids, group="expenses")                           
-                self.dm.insert_data(data, group="expenses")                         
+                data = self.g.get_input_data(valid_ids, group="expense")                           
+                self.dm.insert_data(data, group="expense")                         
             elif selection == '3':                                                  
                 # View Income data                                                  
                 data = self.dm.select(group="income")   
                 self.p.print_select(data)                                   
             elif selection  == '4':                                                 
                 # View Expenses data                                                
-                data = self.dm.select(group="expenses")
-                self.p.print_select(data)                                    
+                data = self.dm.select(group="expense")
+                self.p.print_select(data)
+                self.v.pie_chart(data)                                    
             elif selection == '5':                                                  
                 # Delete income                                                     
                 id_set = self.dm.display_for_delete(group="income")                 
@@ -54,9 +57,9 @@ class CoinJar:
                 self.dm.delete(delete_id, group="income")                           
             elif selection == '6':                                                  
                 # Delete expenses                                                   
-                id_set = self.dm.display_for_delete(group="expenses")           
+                id_set = self.dm.display_for_delete(group="expense")           
                 delete_id = self.g.get_delete_selection(id_set)                          
-                self.dm.delete(delete_id, group="expenses")                         
+                self.dm.delete(delete_id, group="expense")                         
             elif selection == '0':                                                  
                 self.dm.close()                                                         
                 sys.exit("\nGoodbye, and happy saving!")                            

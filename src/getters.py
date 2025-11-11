@@ -38,10 +38,11 @@ class Getter:
 
     def _get_category_id(self, valid_ids, group):
         """Get the category id for the type of income or expense"""
+        print(valid_ids)
         if group == "income":
             self.p.print_income_categories()
 
-        if group == "expenses":
+        if group == "expense":
             self.p.print_expenses_categories()
 
         while True:
@@ -63,6 +64,7 @@ class Getter:
         return None
 
     def get_input_data(self, valid_ids, group):
+        print(valid_ids)
         date = self._get_date()
         amount = self._get_amount()
         category_id = self._get_category_id(valid_ids, group)

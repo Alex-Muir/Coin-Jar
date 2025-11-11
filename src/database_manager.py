@@ -12,7 +12,7 @@ class DatabaseManager:
     def __init__(self):
         """Establishes the database connection for the class"""
         self.con = sqlite3.connect("coinjar.db")
-        self.valid_groups = ("income", "expenses")
+        self.valid_groups = ("income", "expense")
 
     def create_table(self):
         """Create tables for database"""
@@ -68,6 +68,7 @@ class DatabaseManager:
             SELECT id FROM categories WHERE type = ?""", 
                 (group,))
         data = [r[0] for r in res.fetchall()]
+        print(data)
         return data
 
     def insert_data(self, data, group):
