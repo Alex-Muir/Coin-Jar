@@ -64,7 +64,6 @@ class Getter:
         return None
 
     def get_input_data(self, valid_ids, group):
-        print(valid_ids)
         date = self._get_date()
         amount = self._get_amount()
         category_id = self._get_category_id(valid_ids, group)

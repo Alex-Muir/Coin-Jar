@@ -14,8 +14,6 @@ class Visualizer:
         labels = self._get_labels(data)
         sizes = self._get_sizes(data)
 
-        print(labels)
-        print(sizes)
         # Show the pie chart
         fig, ax = plt.subplots()
         ax.pie(sizes, labels=labels, autopct='%1.1f%%')
