@@ -26,17 +26,15 @@ class Printer:
         print("\nPlease enter dates as 'yyyy-mm-dd' format (include the hyphens)."
               "\nYou can leave this blank if you would like to use today's date")
 
-    def print_income_categories(self):
+    def print_income_categories(self, valid_ids_names):
         """Print the categories for income"""
-        print("\nIncome categories and ids")
-        print("\nSalary: 9\nPay Check: 10\nMisc Income: 11")
+        for item in valid_ids_names:
+            print(f"{item[1]} - {item[0]}")
 
-    def print_expenses_categories(self):
+    def print_expenses_categories(self, valid_ids_names):
         """Print the categories for expenses"""
-        print("\nExpense categories and ids")
-        print("\nRent: 1\nGroceries: 2\nEating Out: 3\nTransportation: 4")
-        print("Entertainment & Leisure: 5\nUtilities: 6\nHealth & Wellness: 7")
-        print("Misc Expense: 8")
+        for item in valid_ids_names:
+            print(f"{item[1]} - {item[0]}")
 
     def print_select(self, data):
         """Print the returned data from a database query"""
