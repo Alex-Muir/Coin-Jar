@@ -33,13 +33,13 @@ class CoinJar:
             selection = input("\nPlease make a selection: ").strip()
             if selection == '1':                                                    
                 # Enter Income data     
-                valid_ids = self.dm.get_valid_category_ids(group="income")                                            
-                data = self.g.get_input_data(valid_ids, group="income")                             
+                valid_ids_names = self.dm.get_valid_category_ids_names(group="income")                                            
+                data = self.g.get_input_data(valid_ids_names, group="income")                             
                 self.dm.insert_data(data, group="income")                           
             elif selection == '2':                                                  
                 # Enter Expenses data  
-                valid_ids = self.dm.get_valid_category_ids(group="expense")                                             
-                data = self.g.get_input_data(valid_ids, group="expense")                           
+                valid_ids_names = self.dm.get_valid_category_ids_names(group="expense")                                             
+                data = self.g.get_input_data(valid_ids_names, group="expense")                           
                 self.dm.insert_data(data, group="expense")                         
             elif selection == '3':                                                  
                 # View Income data                                                  
