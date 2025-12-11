@@ -36,18 +36,19 @@ class Getter:
                     continue
                 return amount
 
-    def _get_category_id(self, valid_ids, group):
+    def _get_category_id(self, valid_ids_names, group):
         """Get the category id for the type of income or expense"""
-        print(valid_ids)
         if group == "income":
-            self.p.print_income_categories()
+            self.p.print_income_categories(valid_ids_names)
 
         if group == "expense":
-            self.p.print_expenses_categories()
+            self.p.print_expenses_categories(valid_ids_names)
+
+        valid_ids = [item[0] for item in valid_ids_names]
 
         while True:
             try:
-                category_id = int(input("Enter the category id: ").strip())
+                category_id = int(input("\nEnter the category id: ").strip())
             except ValueError:
                 print("\nPlease enter an integer listed above")
             else:
@@ -63,10 +64,10 @@ class Getter:
             return description
         return None
 
-    def get_input_data(self, valid_ids, group):
+    def get_input_data(self, valid_ids_names, group):
         date = self._get_date()
         amount = self._get_amount()
-        category_id = self._get_category_id(valid_ids, group)
+        category_id = self._get_category_id(valid_ids_names, group)
         description = self._get_description()
 
         return (date, amount, category_id, description)
