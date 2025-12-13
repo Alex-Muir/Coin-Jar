@@ -46,7 +46,8 @@ class CoinJar:
             elif selection == '3':                                                  
                 # View Income data                                                  
                 data = self.dm.select(group="income")   
-                self.p.print_select(data)                                   
+                self.p.print_select(data)
+                self.v.pie_chart(data)
             elif selection  == '4':                                                 
                 # View Expenses data                                                
                 data = self.dm.select(group="expense")
