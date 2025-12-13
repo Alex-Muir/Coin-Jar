@@ -124,4 +124,14 @@ class DatabaseManager:
         id_tuple = (delete_id,)
         cur.execute(f"DELETE FROM {group} WHERE id=?", id_tuple)
         self.con.commit()
-    
+
+
+    def get_total_savings(self):
+        """Return the total amount in the users coinjar"""
+        cur = self.con.cursor()
+        res = cur.execute("SELECT COALESCE(SUM(amount), 0) FROM income;")
+        income = res.fetchone()[0]
+        res = cur.execute("SELECT COALESCE(SUM(amount), 0) FROM expense;")
+        expense = res.fetchone()[0]
+
+        return income - expense

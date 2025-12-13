@@ -28,6 +28,8 @@ class CoinJar:
         Prints the menu, gets user selection, and calls functions based on the
         user's choice
         """
+        print(f"\nTotal in Coin Jar: {self.dm.get_total_savings()}\n") 
+
         while True:
             self.p.print_menu()
             selection = input("\nPlease make a selection: ").strip()
@@ -59,13 +61,14 @@ class CoinJar:
                 # Delete expenses                                                   
                 id_set = self.dm.display_for_delete(group="expense")           
                 delete_id = self.g.get_delete_selection(id_set)                          
-                self.dm.delete(delete_id, group="expense")                         
+                self.dm.delete(delete_id, group="expense")
+            elif selection == '7':
+                print(f"\nTotal in Coin Jar: {self.dm.get_total_savings()}\n")
             elif selection == '0':                                                  
                 self.dm.close()                                                         
                 sys.exit("\nGoodbye, and happy saving!")                            
             else:                                                                   
-                print("\nPlease enter a valid selection")
-         
+                print("\nPlease enter a valid selection") 
 
 if __name__ == "__main__":
     cj = CoinJar()

@@ -17,7 +17,8 @@ class Printer:
         3) View Income                                                              
         4) View Expenses                                                            
         5) Delete Income                                                            
-        6) Delete Expenses                                                          
+        6) Delete Expenses
+        7) Print Coin Jar
         0) Exit                                                                     
         """)
 
