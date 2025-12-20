@@ -5,7 +5,6 @@
 
 Coin Jar is a financial tracker and budgeting application written in Python with SQLite data persistence and category-based summaries and visualizations.
 
----
 
 ## What can Coin Jar do?
 
@@ -75,3 +74,26 @@ Navigate to the src folder within the Coin-Jar folder. To run Coin Jar type:
 
 and press enter.
 
+When opening Coin Jar you will be greeted with your coin jar total and a selection menu
+![Screenshot of coin jar start up](images/start.png)
+
+To add income select the respective number listed in the menu
+![Screenshot of entering income](images/enter_income.png)
+
+Here you will be prompted to enter some data: the date (optional), the amount, the sub-category of income, and a description (optional). This example shows two types of income being entered.
+
+To view the data that was just entered select 'View Income'.
+![Screenshot of viewing income](images/view_income.png)
+A pie chart will appear and display the income type and what percentage of total income it makes up.
+
+Expenses can be entered the same way with the same style of data entry to follow:
+![Screenshot of entering expenses](images/enter_expense.png)
+
+Like income, expenses also can be viewed with a pie chart visualizartion
+![Screen shot of viewing expenses](images/view_expenses.png)
+
+Should you need to delete an entry, simply select the relevant option, Here we will delete income
+![Screenshot of deleting income](images/delete_income.png)
+
+After adding all the income and expenses together and deleting an income entry the coin jar total has been updated, as well as the data and chart for income.
+![Screenshot of undated total](images/updated_income_after_delete.png)
