@@ -63,7 +63,7 @@ is installed using:
 If you get an error then pip needs to be installed. Instructions for installing 
 pip for for different operating systems can be found [here](https://pip.pypa.io/en/stable/installation/)   
 
-Once pip is installed you are ready to install Requests. Requests can be installed
+Once pip is installed you are ready to install Matplotlib. Matplotlib can be installed
 by running:   
 > python -m pip install matplotlib   
 
