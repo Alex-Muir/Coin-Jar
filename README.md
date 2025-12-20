@@ -84,6 +84,7 @@ Here you will be prompted to enter some data: the date (optional), the amount, t
 
 To view the data that was just entered select 'View Income'.
 ![Screenshot of viewing income](images/view_income.png)
+
 A pie chart will appear and display the income type and what percentage of total income it makes up.
 
 Expenses can be entered the same way with the same style of data entry to follow:
