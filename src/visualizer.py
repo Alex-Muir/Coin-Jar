@@ -47,6 +47,4 @@ class Visualizer:
             seen.add(name)
             sizes.append(sum)
 
-        return sizes        
-
-        
+        return sizes                

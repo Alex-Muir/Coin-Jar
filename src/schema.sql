@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS categories (
 
 CREATE TABLE IF NOT EXISTS expense (
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 
-	date TEXT NOT NULL DEFAULT (DATE('now')), 
+	date TEXT NOT NULL DEFAULT (DATE('now', 'localtime')), 
 	amount REAL NOT NULL, 
 	category_id INTEGER NOT NULL, 
 	description TEXT, 
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS expense (
 
 CREATE TABLE IF NOT EXISTS income (
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 
-	date TEXT NOT NULL DEFAULT (DATE('now')), 
+	date TEXT NOT NULL DEFAULT (DATE('now', 'localtime')), 
 	amount REAL NOT NULL, 
 	category_id INTEGER NOT NULL, 
 	description TEXT, 

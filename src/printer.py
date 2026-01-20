@@ -29,11 +29,13 @@ class Printer:
 
     def print_income_categories(self, valid_ids_names):
         """Print the categories for income"""
+        print()
         for item in valid_ids_names:
             print(f"{item[1]} - {item[0]}")
 
     def print_expenses_categories(self, valid_ids_names):
         """Print the categories for expenses"""
+        print()
         for item in valid_ids_names:
             print(f"{item[1]} - {item[0]}")
 

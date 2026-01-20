@@ -5,6 +5,8 @@ can also perform input validation if required.
 """
 
 from printer import Printer
+from datetime import datetime
+import re
 
 class Getter:
     """A class for getting"""
@@ -15,12 +17,29 @@ class Getter:
 
     def _get_date(self):
         """Get the date for income or expenses"""
-
+        
         self.p.print_date_format_requirement()
-        date = input("\nEnter the date: ").strip()
-        if not date:
-            return None
-        return date
+        pattern = r"^\d{4}-\d{2}-\d{2}$"
+
+        while True:
+            date_str = input("\nEnter the date: ").strip()
+            if not date_str:
+                return None
+            else:
+                if re.fullmatch(pattern, date_str):
+                    try:
+                        date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
+                    except ValueError:
+                        print("\nThe date entered is not valid")
+                    else:
+                        break
+                else:
+                    print("\nThe date format is incorrect.")
+                    print("Please add any 0s to fulfill the 'yyyy-mm-dd' requirement")
+                    print("Ex: 1991-02-20")
+                    continue
+
+        return date_obj.isoformat()
 
     def _get_amount(self):
         """Get amount for income or expenses"""
