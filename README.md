@@ -98,3 +98,6 @@ Should you need to delete an entry, simply select the relevant option, Here we w
 
 After adding all the income and expenses together and deleting an income entry the coin jar total has been updated, as well as the data and chart for income.
 ![Screenshot of undated total](images/updated_income_after_delete.png)
+
+When there are numerous entries for income and expenses a line graph will be generated shouwing the total in the coin jar for each date where a transaction was entered.
+![Screenshot of line graph](images/view_coin_jar.png)
