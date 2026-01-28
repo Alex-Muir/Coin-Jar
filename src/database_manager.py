@@ -125,7 +125,6 @@ class DatabaseManager:
         cur.execute(f"DELETE FROM {group} WHERE id=?", id_tuple)
         self.con.commit()
 
-
     def get_total_savings(self):
         """Return the total amount in the users coinjar"""
         cur = self.con.cursor()
@@ -135,3 +134,50 @@ class DatabaseManager:
         expense = res.fetchone()[0]
 
         return income - expense
+
+    def get_line_data(self):
+        """
+        Get dates from the database. Use dates to get income and expenses and
+        for a total to be plotted in a line graph with matplotlib
+        """
+
+        cur  = self.con.cursor()
+        res = cur.execute("""
+            SELECT date FROM income
+            UNION
+            SELECT date FROM expense
+            ORDER BY date
+        """)
+
+        dates = [row[0] for row in res.fetchall()]
+
+        high = low = total = 0
+        data = {}
+        line_graph_data = {}
+
+        for day in dates:
+            income_total = cur.execute(
+                "SELECT COALESCE(SUM(amount), 0) FROM income WHERE date = ?",
+                (day,)
+            ).fetchone()[0]
+
+            expense_total = cur.execute(
+                "SELECT COALESCE(SUM(amount), 0) FROM expense WHERE date = ?",
+                (day,)
+            ).fetchone()[0]
+
+            total += (income_total - expense_total)
+
+            if total > high:
+                high = total
+
+            if total < low:
+                low = total
+
+            line_graph_data[day] = total
+
+        data["line_graph_data"] = line_graph_data
+        data["high"] = high
+        data["low"] = low
+        
+        return data

@@ -65,6 +65,8 @@ class CoinJar:
                 self.dm.delete(delete_id, group="expense")
             elif selection == '7':
                 print(f"\nTotal in Coin Jar: {self.dm.get_total_savings()}\n")
+                data = self.dm.get_line_data()
+                self.v.line_graph(data)
             elif selection == '0':                                                  
                 self.dm.close()                                                         
                 sys.exit("\nGoodbye, and happy saving!")                            

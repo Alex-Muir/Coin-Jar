@@ -47,4 +47,26 @@ class Visualizer:
             seen.add(name)
             sizes.append(sum)
 
-        return sizes                
+        return sizes
+
+    def line_graph(self, data):
+        """Generate Line Graph"""
+
+        if data["line_graph_data"]:
+            x = list(data["line_graph_data"].keys())
+            y = list(data["line_graph_data"].values())
+            low = data["low"] - 10
+            high = data["high"] + 10
+
+            fig, ax = plt.subplots()
+            ax.plot(x, y, marker="o")
+            ax.set_ylim(low, high)
+            ax.set(xlabel="date", label="total")
+            ax.grid()
+
+            ax.set_title("Coin Jar Total")
+            plt.show()
+        else:
+            print("There is not data")
+
+
