@@ -6,3 +6,5 @@ coinjar.db
 
 # Python
 src/__pycache__
+tests/__pycache__
+*.pyc
