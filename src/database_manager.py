@@ -9,9 +9,9 @@ import sqlite3
 class DatabaseManager:
     """A class to manage database interaction"""
     
-    def __init__(self):
+    def __init__(self, db_path="coinjar.db"):
         """Establishes the database connection for the class"""
-        self.con = sqlite3.connect("coinjar.db")
+        self.con = sqlite3.connect(db_path)
         self.valid_groups = ("income", "expense")
 
     def create_table(self):
