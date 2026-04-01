@@ -5,6 +5,7 @@ may return data to be used for validation in functions defined in other modules.
 """
 
 import sqlite3
+import os
 
 class DatabaseManager:
     """A class to manage database interaction"""
@@ -16,8 +17,9 @@ class DatabaseManager:
 
     def create_table(self):
         """Create tables for database"""
+        schema_path = os.path.join(os.path.dirname(__file__), 'schema.sql')
         try:
-            with open('schema.sql') as f:
+            with open(schema_path) as f:
                 coinjar_schema = f.read()
         except FileNotFoundError:
             print("'schema.sql'does not exists.")
