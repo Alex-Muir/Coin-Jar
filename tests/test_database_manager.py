@@ -93,4 +93,3 @@ def test_delete_removes_correct_row(db):
 def test_validate_group_raises_ValueError_on_invalid_group(db):
     with pytest.raises(ValueError):
         db._validate_group("invalid_group")
-
