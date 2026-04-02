@@ -116,7 +116,7 @@ class DatabaseManager:
         for row in res.fetchall():
             id = row[0]
             id_set.add(id)
-            #print(row)
+            print(row)
         return id_set
 
     def delete(self, delete_id, group):
