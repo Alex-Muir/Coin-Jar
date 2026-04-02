@@ -7,6 +7,7 @@ can also perform input validation if required.
 from printer import Printer
 from datetime import datetime
 import re
+import math
 
 class Getter:
     """A class for getting"""
@@ -46,11 +47,12 @@ class Getter:
 
         while True:
             try:
-                amount = float(input("\nEnter the amount: ").strip())
+                # round down to the nearest whole cent
+                amount = math.floor(float(input("\nEnter the amount: ").strip()) * 100) / 100
             except ValueError:
                 print("\nPlease enter a number")
             else:
-                if amount < 0:
+                if amount <= 0:
                     print("\nThe amount must be greater than 0")
                     continue
                 return amount
