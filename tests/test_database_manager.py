@@ -93,3 +93,15 @@ def test_delete_removes_correct_row(db):
 def test_validate_group_raises_ValueError_on_invalid_group(db):
     with pytest.raises(ValueError):
         db._validate_group("invalid_group")
+
+def test_get_valid_category_ids_names(db):
+    cur = db.con.cursor()
+    res = cur.execute("SELECT id, name FROM categories WHERE type = 'income'")
+    income_ids_and_names = res.fetchall()
+    res = cur.execute("SELECT id, name FROM categories WHERE type = 'expense'")
+    expense_ids_and_names = res.fetchall()
+    # Only income ids and names
+    assert db.get_valid_category_ids_names('income') == income_ids_and_names
+    # Only expense ids and names
+    assert db.get_valid_category_ids_names('expense') == expense_ids_and_names
+
