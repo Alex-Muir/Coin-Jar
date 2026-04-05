@@ -139,7 +139,7 @@ class DatabaseManager:
 
     def get_line_data(self):
         """
-        Get dates from the database. Use dates to get income and expenses and
+        Get dates from the database. Use dates to get income and expenses
         for a total to be plotted in a line graph with matplotlib
         """
 
