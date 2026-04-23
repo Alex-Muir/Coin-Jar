@@ -37,7 +37,7 @@ def test_explicit_date_insert(db):
         SELECT date, amount, category_id, description 
         FROM income""").fetchone()
     print(f"Data: {data}")
-    assert data == ("2026-04-01", 50.0, 9, "Test")
+    assert data == ('2026-04-01', 50.0, 9, 'Test')
 
 def test_select_with_default_date(db):
     """
@@ -104,4 +104,4 @@ def test_get_valid_category_ids_names(db):
     assert db.get_valid_category_ids_names('income') == income_ids_and_names
     # Only expense ids and names
     assert db.get_valid_category_ids_names('expense') == expense_ids_and_names
-
+ 
