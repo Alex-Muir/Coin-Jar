@@ -12,6 +12,19 @@ def db():
     db_manager.close()
 
 # TESTS
+def test_tables_are_created(db):
+    cur = db.con.cursor()
+    res = cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
+    tables = {row[0] for row in res.fetchall()}
+    assert {"categories", "income", "expense"} <= tables
+
+def test_calling_create_table_twice_doesnt_wipe_existing_rows(db):
+    cur = db.con.cursor()
+    cur.execute("INSERT INTO income (amount, category_id) VALUES (100, 11)")
+    db.create_table()
+    res = cur.execute("SELECT date, amount, category_id FROM income").fetchall()
+    assert res == [(date.today().isoformat(), 100.0, 11),]
+
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
 
