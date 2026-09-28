@@ -30,6 +30,11 @@ def test_raises_integrity_error_on_bad_category_id(db):
     with pytest.raises(sqlite3.IntegrityError):
         db.insert_data((None, 50, 999, 'Test'), 'income')
 
+def test_rasises_integrity_error_on_categories_with_same_name(db):
+    cur = db.con.cursor()
+    with pytest.raises(sqlite3.IntegrityError):
+        cur.execute("INSERT INTO categories (name, type) VALUES ('Rent', 'expense')")
+
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
 
