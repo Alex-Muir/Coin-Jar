@@ -1,5 +1,6 @@
-import pytest
+import sqlite3
 from datetime import date
+import pytest
 from database_manager import DatabaseManager
 
 # FIXTURES
@@ -24,6 +25,10 @@ def test_calling_create_table_twice_doesnt_wipe_existing_rows(db):
     db.create_table()
     res = cur.execute("SELECT date, amount, category_id FROM income").fetchall()
     assert res == [(date.today().isoformat(), 100.0, 11),]
+
+def test_raises_integrity_error_on_bad_category_id(db):
+    with pytest.raises(sqlite3.IntegrityError):
+        db.insert_data((None, 50, 999, 'Test'), 'income')
 
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
