@@ -40,6 +40,12 @@ def test_rasises_integrity_error_on_categories_with_same_name(db):
     with pytest.raises(sqlite3.IntegrityError):
         cur.execute("INSERT INTO categories (name, type) VALUES ('Rent', 'expense')")
 
+def test_category_count_after_set_category_defaults_call(db):
+    cur = db.con.cursor()
+    category_count = cur.execute("SELECT COUNT(*) FROM categories").fetchone()[0]
+    # Adjust if additional categories are added
+    assert category_count == 11
+
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
 
