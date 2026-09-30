@@ -46,6 +46,12 @@ def test_category_count_after_set_category_defaults_call(db):
     # Adjust if additional categories are added
     assert category_count == 11
 
+def test_category_count_is_the_same_after_second_set_category_defaults_call(db):
+    db.set_category_defaults()
+    cur = db.con.cursor()
+    category_count = cur.execute("SELECT COUNT(*) FROM categories").fetchone()[0]
+    assert category_count == 11
+
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
 
