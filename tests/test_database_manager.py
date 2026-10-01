@@ -140,6 +140,10 @@ def test_validate_group_raises_ValueError_on_invalid_group(db):
     with pytest.raises(ValueError):
         db._validate_group("invalid_group")
 
+def test_validate_groups_succeeds_with_valid_group(db):
+    for group in db.valid_groups:
+        db._validate_group(group)
+
 def test_get_valid_category_ids_names(db):
     cur = db.con.cursor()
     res = cur.execute("SELECT id, name FROM categories WHERE type = 'income'")
@@ -150,4 +154,3 @@ def test_get_valid_category_ids_names(db):
     assert db.get_valid_category_ids_names('income') == income_ids_and_names
     # Only expense ids and names
     assert db.get_valid_category_ids_names('expense') == expense_ids_and_names
- 
