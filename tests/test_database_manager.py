@@ -52,6 +52,12 @@ def test_category_count_is_the_same_after_second_set_category_defaults_call(db):
     category_count = cur.execute("SELECT COUNT(*) FROM categories").fetchone()[0]
     assert category_count == 11
 
+def test_close_actually_closes_database_connection(db):
+    cur = db.con.cursor()
+    db.close()
+    with pytest.raises(sqlite3.ProgrammingError):
+        cur.execute("SELECT 1")
+
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
 
