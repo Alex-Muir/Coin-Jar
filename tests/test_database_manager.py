@@ -62,6 +62,11 @@ def test_insert_data_raises_value_error_on_bad_group(db):
     with pytest.raises(ValueError):
         db.insert_data((None, 3, 90, "Test"), group="bogus")
 
+def test_description_is_none(db):
+    db.insert_data((None, 50, 9, None), "income")
+    res = db.con.execute("SELECT description FROM income").fetchone()
+    assert res[0] is None
+
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
 
