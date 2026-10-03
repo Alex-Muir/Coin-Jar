@@ -58,6 +58,10 @@ def test_close_actually_closes_database_connection(db):
     with pytest.raises(sqlite3.ProgrammingError):
         cur.execute("SELECT 1")
 
+def test_insert_data_raises_value_error_on_bad_group(db):
+    with pytest.raises(ValueError):
+        db.insert_data((None, 3, 90, "Test"), group="bogus")
+
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
 
