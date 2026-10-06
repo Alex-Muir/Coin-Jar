@@ -67,6 +67,19 @@ def test_description_is_none(db):
     res = db.con.execute("SELECT description FROM income").fetchone()
     assert res[0] is None
 
+def test_insert_data_increments_id(db):
+    cur = db.con.cursor()
+    db.insert_data((None, 50, 9, 'First'), 'income')
+    res = cur.execute("SELECT id FROM income WHERE description='First'")
+    first_id = res.fetchone()[0]
+    
+    db.insert_data((None, 75, 9, 'Second'), 'income')
+    res = cur.execute("SELECT id FROM income WHERE description='Second' ")
+    second_id = res.fetchone()[0]
+
+    assert second_id != first_id
+    assert second_id > first_id
+
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
 
