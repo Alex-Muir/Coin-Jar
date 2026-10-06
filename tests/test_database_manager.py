@@ -80,6 +80,10 @@ def test_insert_data_increments_id(db):
     assert second_id != first_id
     assert second_id > first_id
 
+def test_select_invalid_group_raises_value_error(db):
+    with pytest.raises(ValueError):
+        db.select("bogus")
+
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
 
