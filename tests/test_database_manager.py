@@ -84,6 +84,9 @@ def test_select_invalid_group_raises_value_error(db):
     with pytest.raises(ValueError):
         db.select("bogus")
 
+def test_select_empty_group_table_returns_empty_list(db):
+    assert db.select("income") == []
+
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
 
