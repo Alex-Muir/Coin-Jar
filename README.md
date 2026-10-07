@@ -101,3 +101,7 @@ After adding all the income and expenses together and deleting an income entry t
 
 When there are numerous entries for income and expenses a line graph will be generated shouwing the total in the coin jar for each date where a transaction was entered.
 ![Screenshot of line graph](images/view_coin_jar.png)
+
+## Running Tests
+Coin Jar uses Pytest for testing. To run test navigate into the Coin Jar directory and run `pytest`. The output will display "PASSED" or "FAILED".
+![Screenshot of testing output](images/testing.png)
