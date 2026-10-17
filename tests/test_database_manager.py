@@ -95,6 +95,9 @@ def test_display_for_deletes_returned_set(db):
     """)
     assert db.display_for_delete('income') == {1, 2, 3}
 
+def test_display_for_delete_returns_a_set(db):
+    assert isinstance(db.display_for_delete('income'), set) == True
+
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
 
