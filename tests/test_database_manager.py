@@ -87,6 +87,14 @@ def test_select_invalid_group_raises_value_error(db):
 def test_select_empty_group_table_returns_empty_list(db):
     assert db.select("income") == []
 
+def test_display_for_deletes_returned_set(db):
+    cur = db.con.cursor()
+    cur.execute("""
+        INSERT INTO income (amount, category_id, description)
+        VALUES (55, 9, 'Test'), (100, 10, 'Test2'), (20, 9, 'Test3')
+    """)
+    assert db.display_for_delete('income') == {1, 2, 3}
+
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
 
