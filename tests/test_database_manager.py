@@ -100,7 +100,7 @@ def test_display_for_delete_returns_a_set(db):
 
 def test_display_for_delete_raises_value_error_on_invlaid_group(db):
     with pytest.raises(ValueError):
-        db.display_for_delete("bogus")
+        db.display_for_delete("bogus") 
 
 def test_get_total_savings_returns_zero_when_tables_empty(db):
     assert db.get_total_savings() == 0
@@ -170,7 +170,7 @@ def test_select_with_explicit_date(db):
         ('Eating Out', '2026-04-01', 25, 'expense', 'Test')
     ]
 
-def test_delete_removes_correct_row(db):
+def test_delete_removes_correct_row_from_expense(db):
     cur = db.con.cursor()
     cur.execute("INSERT INTO expense (amount, category_id) VALUES (100, 2)")
     cur.execute("INSERT INTO expense (amount, category_id) VALUES (25, 3)")
@@ -179,6 +179,14 @@ def test_delete_removes_correct_row(db):
     ids = [row[0] for row in cur.execute("SELECT id FROM expense").fetchall()]
     print(f"set: {ids}")
     assert (2 not in ids)
+
+def test_delete_removes_correct_row_from_income(db):
+    cur = db.con.cursor()
+    data = [(100, 9), (200, 10), (300, 11)]
+    cur.executemany("INSERT INTO income (amount, category_id) VALUES(?, ?)", data)
+    db.delete(2, 'income')
+    ids = [row[0] for row in cur.execute("SELECT id FROM income").fetchall()]
+    assert 2 not in ids
 
 def test_validate_group_raises_ValueError_on_invalid_group(db):
     with pytest.raises(ValueError):
