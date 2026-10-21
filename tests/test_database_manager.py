@@ -196,6 +196,12 @@ def test_delete_invalid_id_leaves_row_count_unchanged(db):
     data = cur.execute("SELECT id FROM income").fetchall()
     assert len(data) == 3
 
+def test_delete_raises_value_error_on_invalid_group(db):
+    cur = db.con.cursor()
+    cur.execute("INSERT INTO income (amount, category_id) VALUES(100, 9)")
+    with pytest.raises(ValueError):
+        db.delete(1, 'bogus')
+
 def test_validate_group_raises_ValueError_on_invalid_group(db):
     with pytest.raises(ValueError):
         db._validate_group("invalid_group")
