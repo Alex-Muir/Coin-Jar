@@ -202,6 +202,12 @@ def test_delete_raises_value_error_on_invalid_group(db):
     with pytest.raises(ValueError):
         db.delete(1, 'bogus')
 
+def test_get_total_savings_returns_negative_number_when_expenses_exceed_income(db):
+    cur = db.con.cursor()
+    cur.execute("INSERT INTO income (amount, category_id) VALUES (50, 11)")
+    cur.execute("INSERT INTO expense (amount, category_id) VALUES (80, 3)")
+    assert db.get_total_savings() == -30
+
 def test_validate_group_raises_ValueError_on_invalid_group(db):
     with pytest.raises(ValueError):
         db._validate_group("invalid_group")
