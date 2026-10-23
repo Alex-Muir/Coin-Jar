@@ -153,7 +153,8 @@ class DatabaseManager:
 
         dates = [row[0] for row in res.fetchall()]
 
-        high = low = total = 0
+        total = 0
+        high = low = None
         data = {}
         line_graph_data = {}
 
@@ -170,10 +171,10 @@ class DatabaseManager:
 
             total += (income_total - expense_total)
 
-            if total > high:
+            if high is None or total > high:
                 high = total
 
-            if total < low:
+            if low is None or total < low:
                 low = total
 
             line_graph_data[day] = total
