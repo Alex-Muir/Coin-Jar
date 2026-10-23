@@ -208,6 +208,45 @@ def test_get_total_savings_returns_negative_number_when_expenses_exceed_income(d
     cur.execute("INSERT INTO expense (amount, category_id) VALUES (80, 3)")
     assert db.get_total_savings() == -30
 
+def test_line_graph_data_all_positive(db):
+    cur = db.con.cursor()
+    date_and_amount_income = [
+        ('2024-02-09', 50, 9), 
+        ('2024-02-10', 100, 9), 
+        ('2024-02-15', 25, 9), 
+        ('2024-02-20', 25, 9)
+    ]
+    date_and_amount_expense = [
+        ('2024-02-09', 20, 1),
+        ('2024-02-11', 60, 1),
+        ('2024-02-15', 40, 1),
+        ('2024-02-18', 30, 1)
+    ]
+
+    cur.executemany("""
+        INSERT INTO income (date, amount, category_id) 
+        VALUES(?, ?, ?)""", date_and_amount_income
+    )
+    cur.executemany(
+        """INSERT INTO expense (date, amount, category_id) 
+        VALUES(?, ?, ?)""", date_and_amount_expense
+    )
+
+    data = db.get_line_data()
+
+    assert data['line_graph_data'] == {
+        '2024-02-09': 30, 
+        '2024-02-10': 130, 
+        '2024-02-11': 70, 
+        '2024-02-15': 55, 
+        '2024-02-18': 25, 
+        '2024-02-20': 50,
+    }, "Line graph data is not correct"
+
+    assert data['low'] == 25, "The low value is incorrect"
+    assert data['high'] == 130, "The high value is incorrect"
+
+
 def test_validate_group_raises_ValueError_on_invalid_group(db):
     with pytest.raises(ValueError):
         db._validate_group("invalid_group")
