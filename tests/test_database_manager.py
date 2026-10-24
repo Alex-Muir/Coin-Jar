@@ -284,6 +284,12 @@ def test_line_graph_data_all_negative_total_values(db):
     assert data['low'] == -115, "The low value is incorrect"
     assert data['high'] == -10, "The high value is incorrect"
 
+def test_get_line_data_empty_tables(db):
+    data = db.get_line_data()
+    assert data['line_graph_data'] == {}
+    assert data['high'] is None
+    assert data['low'] is None
+
 def test_validate_group_raises_ValueError_on_invalid_group(db):
     with pytest.raises(ValueError):
         db._validate_group("invalid_group")
