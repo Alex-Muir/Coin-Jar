@@ -290,6 +290,23 @@ def test_get_line_data_empty_tables(db):
     assert data['high'] is None
     assert data['low'] is None
 
+def test_get_line_data_singl_day_income_and_expense(db):
+    cur = db.con.cursor()
+    cur.execute("""
+        INSERT INTO income (date, amount, category_id) 
+        VALUES ('2024-02-09', 50, 9)
+    """)
+
+    cur.execute("""
+        INSERT INTO expense (date, amount, category_id)
+        VALUES ('2024-02-09', 20, 1)
+    """)
+
+    data = db.get_line_data()
+    assert data['line_graph_data'] == {'2024-02-09': 30}
+    assert data['high'] == 30
+    assert data['low'] == 30
+
 def test_validate_group_raises_ValueError_on_invalid_group(db):
     with pytest.raises(ValueError):
         db._validate_group("invalid_group")
