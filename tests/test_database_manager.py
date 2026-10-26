@@ -323,6 +323,27 @@ def test_get_line_datapositive_then_negative(db):
     assert data['high'] == 50
     assert data['low'] == -50
 
+def test_get_line_data_zero_then_negative(db):
+    cur = db.con.cursor()
+    cur.execute("""
+        INSERT INTO income (date, amount, category_id)
+        VALUES ('2024-02-09', 50, 9)
+    """)
+    expense_input = [
+        ('2024-02-09', 50, 1),
+        ('2024-02-11', 50, 1)
+    ]
+    cur.executemany("""
+        INSERT INTO expense (date, amount, category_id)
+        VALUES (?, ?, ?)
+    """, expense_input)
+
+    data = db.get_line_data()
+
+    assert data['line_graph_data'] == {'2024-02-09': 0, '2024-02-11': -50}
+    assert data['high'] == 0
+    assert data['low'] == -50
+
 def test_validate_group_raises_ValueError_on_invalid_group(db):
     with pytest.raises(ValueError):
         db._validate_group("invalid_group")
