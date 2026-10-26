@@ -367,6 +367,29 @@ def test_get_line_data_only_income(db):
     assert data['high'] == 170
     assert data['low'] == 50
 
+def test_get_line_data_only_expense(db):
+    cur = db.con.cursor()
+    expense_data = [
+        ('2024-02-09', 50, 9),
+        ('2024-02-11', 100, 10),
+        ('2024-02-13', 20, 9)
+    ]
+
+    cur.executemany("""
+        INSERT INTO expense (date, amount, category_id)
+        VALUES (?, ?, ?)
+    """, expense_data)
+
+    data = db.get_line_data()
+
+    assert data['line_graph_data'] == {
+        '2024-02-09': -50, 
+        '2024-02-11': -150, 
+        '2024-02-13': -170
+    }
+    assert data['high'] == -50
+    assert data['low'] == -170
+
 def test_validate_group_raises_ValueError_on_invalid_group(db):
     with pytest.raises(ValueError):
         db._validate_group("invalid_group")
