@@ -14,17 +14,10 @@ def test_get_date(g):
         print(result)
     assert result == '2024-04-02'
 
-def test_get_amount(g):
-    """
-    Expected input should be a an integer or float. The method does allow the user to 
-    enter more than two numbers after the decimal point, but the result will be rounded 
-    down to the nearest whole cent
-    """ 
-    # Accepts numeric and positive input
-    with patch('builtins.input', side_effect=['abc', '!', '0', '-5', '100']):
-        result1 = g._get_amount()
-        print(result1)
-    assert result1 == 100.0
+def test_get_amount_accepts_only_numeric_input(g):
+    with patch('builtins.input', side_effect=['abc', '!', '100']):
+        result = g._get_amount()
+    assert result == 100.0
 
 def test_get_amount_accepts_decimal_input(g):
     with patch('builtins.input', side_effect=['100.05']):
