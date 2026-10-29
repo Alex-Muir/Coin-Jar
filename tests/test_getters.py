@@ -19,6 +19,11 @@ def test_get_amount_accepts_only_numeric_input(g):
         result = g._get_amount()
     assert result == 100.0
 
+def test_get_amount_accepts_only_positive_input(g):
+    with patch('builtins.input', side_effect=['0', '-5', '100']):
+        result = g._get_amount()
+    assert result == 100.0
+
 def test_get_amount_accepts_decimal_input(g):
     with patch('builtins.input', side_effect=['100.05']):
         result = g._get_amount()
