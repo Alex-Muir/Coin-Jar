@@ -38,3 +38,9 @@ def test_get_date_with_no_input_returns_none(g):
     with patch('builtins.input', side_effect=['']):
         result = g._get_date()
     assert result is None
+
+def test_get_date_with_valid_leap_year(g):
+    with patch('builtins.input', side_effect=['2023-02-29', '2024-02-29']):
+        result = g._get_date()
+    assert result == '2024-02-29'
+    
