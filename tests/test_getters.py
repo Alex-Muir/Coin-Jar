@@ -7,11 +7,17 @@ def g():
     getter = Getter()
     yield getter
 
+# TEST _get_date()
 def test_get_date_date_format(g):
     with patch('builtins.input', side_effect=['12-12-2024', '2024-13-5', '2024-04-02']):
         result = g._get_date()
         print(result)
     assert result == '2024-04-02'
+
+def test_get_date_valid_date(g):
+    with patch('builtins.input', side_effect=['2023-02-29', '2023-02-28']):
+        result = g._get_date()
+    assert result == '2023-02-28'
 
 def test_get_date_with_no_input_returns_none(g):
     with patch('builtins.input', side_effect=['']):
@@ -23,6 +29,7 @@ def test_get_date_with_valid_leap_year(g):
         result = g._get_date()
     assert result == '2024-02-29'
 
+# TEST _get_amount()
 def test_get_amount_accepts_only_numeric_input(g):
     with patch('builtins.input', side_effect=['abc', '!', '100']):
         result = g._get_amount()
