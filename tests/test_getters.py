@@ -33,3 +33,8 @@ def test_get_amount_rounds_to_nearest_whole_cent(g):
     with patch('builtins.input', side_effect=['100.48796578']):
         result = g._get_amount()
     assert result == 100.48
+
+def test_get_date_with_no_input_returns_none(g):
+    with patch('builtins.input', side_effect=['']):
+        result = g._get_date()
+    assert result is None
