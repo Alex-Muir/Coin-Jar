@@ -48,4 +48,9 @@ def test_get_amount_accepts_decimal_input(g):
 def test_get_amount_rounds_to_nearest_whole_cent(g):
     with patch('builtins.input', side_effect=['100.48796578']):
         result = g._get_amount()
-    assert result == 100.48 
+    assert result == 100.48
+
+def test_get_amount_accecpts_scientific_notation(g):
+    with patch('builtins.input', side_effect=['1e2']):
+        result = g._get_amount()
+    assert result == 100.0
