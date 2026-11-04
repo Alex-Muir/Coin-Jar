@@ -54,3 +54,10 @@ def test_get_amount_accecpts_scientific_notation(g):
     with patch('builtins.input', side_effect=['1e2']):
         result = g._get_amount()
     assert result == 100.0
+
+# TEST _get_category_id()
+def test_get_category_id_income_returns_valid_id(g):
+    valid = [(9, 'Salary'), (10, 'Pay Check'), (11, 'Miscellaneous Income')]
+    with patch('builtins.input', side_effect=['10']):
+        result = g._get_category_id(valid, "income")
+    assert result == 10
