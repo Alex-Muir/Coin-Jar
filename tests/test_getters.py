@@ -61,3 +61,20 @@ def test_get_category_id_income_returns_valid_id(g):
     with patch('builtins.input', side_effect=['10']):
         result = g._get_category_id(valid, "income")
     assert result == 10
+
+
+def test_get_category_id_expense_returns_valid_id(g):
+    valid = [
+        (1, 'Rent'), 
+        (2, 'Groceries'), 
+        (3, 'Eating Out'), 
+        (4, 'Transportation'), 
+        (5, 'Entertainment & Leisure'), 
+        (6, 'Utilities'), 
+        (7, 'Health & Wellness'), 
+        (8, 'Miscellaneous Enpense')
+    ]
+
+    with patch('builtins.input', side_effect=['8']):
+        result = g._get_category_id(valid, "expense")
+    assert result == 8
