@@ -55,6 +55,11 @@ def test_get_amount_accecpts_scientific_notation(g):
         result = g._get_amount()
     assert result == 100.0
 
+def test_get_amount_does_not_lose_a_cent_on_exact_input(g):
+    with patch('builtins.input', side_effect=['19.99']):
+        result = g._get_amount()
+    assert result == 19.99
+
 # TEST _get_category_id()
 def test_get_category_id_income_returns_valid_id(g):
     valid = [(9, 'Salary'), (10, 'Pay Check'), (11, 'Miscellaneous Income')]
