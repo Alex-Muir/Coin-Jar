@@ -81,6 +81,12 @@ def test_get_category_id_expense_returns_valid_id(g):
 
 def test_get_category_id_rejects_non_integer(g): 
     valid = [(9, 'Salary'), (10, 'Pay Check'), (11, 'Miscellaneous Income')]
-    with patch('builtins.input', side_effect=['a', '!', '9']):
+    with patch('builtins.input', side_effect=['a', '!', ' ', '', '9']):
+        result = g._get_category_id(valid, 'income')
+    assert result == 9
+
+def test_get_category_id_rejects_invalid_integer(g): 
+    valid = [(9, 'Salary'), (10, 'Pay Check'), (11, 'Miscellaneous Income')]
+    with patch('builtins.input', side_effect=['100', '13', '-2', '9']):
         result = g._get_category_id(valid, 'income')
     assert result == 9
