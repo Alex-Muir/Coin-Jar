@@ -135,7 +135,7 @@ class DatabaseManager:
         res = cur.execute("SELECT COALESCE(SUM(amount), 0) FROM expense;")
         expense = res.fetchone()[0]
 
-        return income - expense
+        return round(income - expense, 2)
 
     def get_line_data(self):
         """
@@ -177,7 +177,7 @@ class DatabaseManager:
             if low is None or total < low:
                 low = total
 
-            line_graph_data[day] = total
+            line_graph_data[day] = round(total, 2)
 
         data["line_graph_data"] = line_graph_data
         data["high"] = high
