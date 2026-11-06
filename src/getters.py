@@ -55,6 +55,9 @@ class Getter:
             except InvalidOperation:
                 print("\nPlease enter a number")
             else:
+                if not amount.is_finite():
+                    print("\nPlease enter a number")
+                    continue
                 if amount <= 0:
                     print("\nThe amount must be greater than 0")
                     continue
