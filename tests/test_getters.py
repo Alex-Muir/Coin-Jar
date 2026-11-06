@@ -60,6 +60,11 @@ def test_get_amount_does_not_lose_a_cent_on_exact_input(g):
         result = g._get_amount()
     assert result == 19.99
 
+def test_get_amount_rejects_nan_and_infinity(g):
+    with patch('builtins.input', side_effect=['nan', 'inf', '5']):
+        result = g._get_amount()
+    assert result == 5.0
+
 # TEST _get_category_id()
 def test_get_category_id_income_returns_valid_id(g):
     valid = [(9, 'Salary'), (10, 'Pay Check'), (11, 'Miscellaneous Income')]
