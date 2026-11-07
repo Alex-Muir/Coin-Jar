@@ -121,3 +121,9 @@ def test_get_category_id_expense_uses_expense_printer(g):
 
     g.p.print_expenses_categories.assert_called_once_with(valid)
     g.p.print_income_categories.assert_not_called()
+
+# TEST _get_description()
+def test_get_description_with_whitespace_only_returns_none(g):
+    with patch('builtins.input', side_effect=['    ']):
+        result = g._get_description()
+    assert result is None
