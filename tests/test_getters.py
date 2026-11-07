@@ -1,6 +1,7 @@
 import pytest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from getters import Getter
+from printer import Printer
 
 @pytest.fixture
 def g():
@@ -100,3 +101,13 @@ def test_get_category_id_rejects_invalid_integer(g):
     with patch('builtins.input', side_effect=['100', '13', '-2', '9']):
         result = g._get_category_id(valid, 'income')
     assert result == 9
+
+def test_get_category_id_income_uses_income_printer(g):
+    g.p = MagicMock(spec=Printer)
+    valid = [(9, 'Salary'), (10, 'Pay Check')]
+
+    with patch('builtins.input', side_effect=['9']):
+        g._get_category_id(valid, 'income')
+
+    g.p.print_income_categories.assert_called_once_with(valid)
+    g.p.print_expenses_categories.assert_not_called()
