@@ -111,3 +111,13 @@ def test_get_category_id_income_uses_income_printer(g):
 
     g.p.print_income_categories.assert_called_once_with(valid)
     g.p.print_expenses_categories.assert_not_called()
+
+def test_get_category_id_expense_uses_expense_printer(g):
+    g.p = MagicMock(spec=Printer)
+    valid = [(1, 'Rent'), (2, 'Groceries')]
+
+    with patch('builtins.input', side_effect=['1']):
+        g._get_category_id(valid, 'expense')
+
+    g.p.print_expenses_categories.assert_called_once_with(valid)
+    g.p.print_income_categories.assert_not_called()
