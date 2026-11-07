@@ -127,3 +127,8 @@ def test_get_description_with_whitespace_only_returns_none(g):
     with patch('builtins.input', side_effect=['    ']):
         result = g._get_description()
     assert result is None
+
+def test_get_description_with_whitespace_padded_input_strips_input(g):
+    with patch('builtins.input', side_effect=['  groceries  ']):
+        result = g._get_description()
+    assert result == 'groceries'
