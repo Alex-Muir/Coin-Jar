@@ -132,3 +132,15 @@ def test_get_description_with_whitespace_padded_input_strips_input(g):
     with patch('builtins.input', side_effect=['  groceries  ']):
         result = g._get_description()
     assert result == 'groceries'
+
+def test_get_input_data_returns_tuple_in_order(g):
+    g._get_date = MagicMock(return_value='2024-02-09')
+    g._get_amount = MagicMock(return_value=19.99)
+    g._get_category_id = MagicMock(return_value=9)
+    g._get_description = MagicMock(return_value='Paycheck')
+
+    valid = [(9, "Salary"), (10, "Pay Check")]
+    result = g.get_input_data(valid, "income")
+
+    assert result == ('2024-02-09', 19.99, 9, 'Paycheck')
+    g._get_category_id.assert_called_once_with(valid, "income")
