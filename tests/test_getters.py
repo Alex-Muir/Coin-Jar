@@ -133,6 +133,8 @@ def test_get_description_with_whitespace_padded_input_strips_input(g):
         result = g._get_description()
     assert result == 'groceries'
 
+
+# TEST get_input_data()
 def test_get_input_data_returns_tuple_in_order(g):
     g._get_date = MagicMock(return_value='2024-02-09')
     g._get_amount = MagicMock(return_value=19.99)
@@ -144,3 +146,11 @@ def test_get_input_data_returns_tuple_in_order(g):
 
     assert result == ('2024-02-09', 19.99, 9, 'Paycheck')
     g._get_category_id.assert_called_once_with(valid, "income")
+
+# TEST get_delete_selection()
+def test_get_delete_selection_returns_valid_input_immediately(g):
+    id_set = {1, 2, 3, 4, 5, 6, 7}
+
+    with patch('builtins.input', side_effect=['5']):
+        result = g.get_delete_selection(id_set)
+    assert result == 5
