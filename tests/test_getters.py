@@ -154,3 +154,10 @@ def test_get_delete_selection_returns_valid_input_immediately(g):
     with patch('builtins.input', side_effect=['5']):
         result = g.get_delete_selection(id_set)
     assert result == 5
+
+def test_get_delete_selection_rejects_non_integer_input(g):
+    id_set = {1, 2, 3, 4, 5, 6, 7}
+
+    with patch('builtins.input', side_effect=['a', 'g', '!', '.', '2']):
+        result = g.get_delete_selection(id_set)
+    assert result == 2
