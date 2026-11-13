@@ -168,3 +168,13 @@ def test_get_delete_selection_rejects_invalid_numerical_input(g):
     with patch('builtins.input', side_effect=['0', '8', '2.2', '4']):
         result = g.get_delete_selection(id_set)
     assert result == 4
+
+def test_get_delete_selection_exits_early_on_empty_set(g, capsys):
+    with patch('builtins.input', side_effect=[]) as mock_input:
+        result = g.get_delete_selection(set())
+
+    captured = capsys.readouterr()
+
+    assert result is None
+    assert "Nothing to delete" in captured.out
+    mock_input.assert_not_called()
