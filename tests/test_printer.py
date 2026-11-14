@@ -7,7 +7,14 @@ def p():
     yield printer
 
 def test_print_greeting(p, capsys):
+    p.print_greeting()
+    capture = capsys.readouterr()
+    assert "Welcome to Coin Jar!" in capture.out
+
+def test_print_menu(p, capsys):
     p.print_menu()
     capture = capsys.readouterr()
     for label in ["1)", "2)", "3)", "4)", "5)", "6)", "7)", "0)"]:
         assert label in capture.out, f"menu is missing {label}"
+
+
