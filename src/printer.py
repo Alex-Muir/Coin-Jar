@@ -1,8 +1,5 @@
 class Printer:
     """A class for printing long bitd of text"""
-    def __init__(self):
-        """Nothing happens here"""
-        pass
 
     def print_greeting(self):
         """Print the greeting when the program begins"""
