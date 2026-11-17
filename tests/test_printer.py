@@ -17,4 +17,9 @@ def test_print_menu(p, capsys):
     for label in ["1)", "2)", "3)", "4)", "5)", "6)", "7)", "0)"]:
         assert label in capture.out, f"menu is missing {label}"
 
+def test_print_date_format_requirement(p, capsys):
+    p.print_date_format_requirement()
+    capture = capsys.readouterr()
+    assert "Please enter dates as 'yyyy-mm-dd'" in capture.out
+
 
