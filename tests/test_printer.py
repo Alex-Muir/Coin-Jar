@@ -29,4 +29,9 @@ def test_print_income_categories(p, capsys):
     for item in categories:
         assert f"{item[1]} - {item[0]}" in capture.out
 
-
+def test_print_expenses_categories(p, capsys):
+    categories = [(1, 'Rent'), (2, 'Groceries')]
+    p.print_expenses_categories(categories)
+    capture = capsys.readouterr()
+    for item in categories:
+        assert f"{item[1]} - {item[0]}" in capture.out
