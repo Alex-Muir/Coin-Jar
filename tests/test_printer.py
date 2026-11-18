@@ -22,4 +22,11 @@ def test_print_date_format_requirement(p, capsys):
     capture = capsys.readouterr()
     assert "Please enter dates as 'yyyy-mm-dd'" in capture.out
 
+def test_print_income_categories(p, capsys):
+    categories = [(9, 'Salary'), (10, 'Pay Check')]
+    p.print_income_categories(categories)
+    capture = capsys.readouterr()
+    for item in categories:
+        assert f"{item[1]} - {item[0]}" in capture.out
+
 
