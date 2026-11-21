@@ -35,3 +35,9 @@ def test_print_expenses_categories(p, capsys):
     capture = capsys.readouterr()
     for item in categories:
         assert f"{item[1]} - {item[0]}" in capture.out
+
+def test_print_select(p, capsys):
+    data = [('Pay Check', '2026-01-28', 200.0, 'income', 'Test income')]
+    p.print_select(data)
+    capture = capsys.readouterr()
+    assert str(data) in capture.out
