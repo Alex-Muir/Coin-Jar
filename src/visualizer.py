@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import numpy as np
 
 class Visualizer:
     """A class for making visualizations of data"""
@@ -17,7 +16,7 @@ class Visualizer:
         # Show the pie chart
         fig, ax = plt.subplots()
         ax.pie(sizes, labels=labels, autopct='%1.1f%%')
-        plt.show()       
+        plt.show()
 
     def _get_labels(self, data):
         """Gets the names of the expense/income types to be used as labels"""
