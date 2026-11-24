@@ -3,10 +3,6 @@ import matplotlib.pyplot as plt
 class Visualizer:
     """A class for making visualizations of data"""
 
-    def __init__(self):
-        """Nothing happens here"""
-        pass
-
     def pie_chart(self, data):
         """Generates a pie chart"""
         # For the labels and sizes of the pie chart
